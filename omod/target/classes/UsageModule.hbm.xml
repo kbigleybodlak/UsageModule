@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.UsageModule">
+    
+    <class name="PatientUsage" table="usagestatistics_patientusage">
+        <id name="patientusage_id" type="int" column="patientusage_id">
+            <generator class="native" />
+        </id>
+        <property name="user_id" column="user_id" not-null="true" ></property>
+        <property name="patient_id" column="patient_id" not-null="true"></property>
+        <property name="location_id" column="location_id" not-null="true"></property>
+        <property name="action_type_id" column="action_type_id" not-null="true"></property>
+        <property name="encounter_id" column="encounter_id" ></property>
+        <property name="timestamp" column="timestamp"></property>          
+    </class>
+    
+    <class name="OrderUsage" table="usagestatistics_orderusage">
+        <id name="orderusage_id" type="int" column="orderusage_id">
+            <generator class="native" />
+        </id>
+        <property name="order_id" column="order_id" not-null="true" ></property>
+        <property name="user_id" column="user_id" not-null="true" ></property>
+        <property name="patient_id" column="patient_id" not-null="true"></property>
+        <property name="location_id" column="location_id" not-null="true"></property>
+        <property name="action_type_id" column="action_type_id" not-null="true"></property>
+        <property name="encounter_id" column="encounter_id" ></property>
+        <property name="timestamp" column="timestamp"></property>         
+    </class>
+    
+    <class name="VisitUsage" table="usagestatistics_visitusage">
+        <id name="visitusage_id" type="int" column="visitusage_id">
+            <generator class="native" />
+        </id>
+        <property name="visit_id" column="visit_id" not-null="true" ></property>
+        <property name="user_id" column="user_id" not-null="true" ></property>
+        <property name="patient_id" column="patient_id" not-null="true"></property>
+        <property name="location_id" column="location_id" not-null="true"></property>
+        <property name="action_type_id" column="action_type_id" not-null="true"></property>
+        <property name="encounter_id" column="encounter_id" ></property>
+        <property name="timestamp" column="timestamp"></property>         
+    </class>
+    
+    <class name="ActionType" table="usagestatistics_action_type">
+        <id name="action_type_id" type="int" column="action_type_id">
+            <generator class="native" />
+        </id>
+        <property name="name" column="name" not-null="true" ></property>
+        <property name="description" column="description"  ></property>         
+    </class>
+    
+    
+
+<!--
+	<class name="UsageModule"
+		table="usagemodule">
+		<id name="id" type="int" column="id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<discriminator column="id" insert="false" />
+		<property name="uuid" type="java.lang.String" column="uuid"
+			length="38" unique="true" />
+	</class>
+-->
+
+</hibernate-mapping>

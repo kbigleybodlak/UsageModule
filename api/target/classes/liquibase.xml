@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <!--
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+    
+    
+    <changeSet id="usagemodule-1" author="pprevide">
+        <sql>
+            drop table if exists usagestatistics_action_type;
+        </sql>
+    </changeSet>
+    
+    <changeSet id="usagemodule-2" author="pprevide">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="usagestatistics_action_type" />
+            </not>
+        </preConditions>
+        <createTable tableName="usagestatistics_action_type">
+            <column name="action_type_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>        
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="usagemodule-3" author="pprevide">
+        <sql>
+            INSERT INTO usagestatistics_action_type (name, description) VALUES ('created', 'created a new record'); 
+        </sql>
+        <sql>
+            INSERT INTO usagestatistics_action_type (name, description) VALUES ('updated', 'updated an existing record'); 
+        </sql>
+        <sql>
+            INSERT INTO usagestatistics_action_type (name, description) VALUES ('voided', 'voided a record'); 
+            
+        </sql>
+    </changeSet>
+    
+    <changeSet id="usagemodule-4" author="pprevide">
+        <sql>
+            drop table if exists usagestatistics_patientusage;
+        </sql>
+    </changeSet>
+    
+    <changeSet id="usagemodule-5" author="pprevide">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="usagestatistics_patientusage" />
+            </not>
+        </preConditions>
+        <createTable tableName="usagestatistics_patientusage">
+            <column name="patientusage_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="patientusagefk_user_id" references="users(user_id)"/>
+            </column>
+            <column name="patient_id" type="int" > 
+                <constraints nullable="false" foreignKeyName="patientusagefk_patient_id" references="patient(patient_id)"/>
+            </column>
+            <column name="location_id" type="int" >
+                <constraints nullable="false" foreignKeyName="patientusagefk_location_id" references="location(location_id)" />
+            </column>
+            <column name="action_type_id" type="int" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="encounter_id" type="int" >
+                 
+            </column>
+            <column name="timestamp" type="timestamp">
+                
+            </column>
+        </createTable>    
+    </changeSet>
+    
+    <changeSet id="usagemodule-6" author="pprevide">
+        <sql>
+            drop table if exists usagestatistics_orderusage;
+        </sql>
+    </changeSet>
+    
+    <changeSet id="usagemodule-7" author="pprevide">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="usagestatistics_orderusage" />
+            </not>
+        </preConditions>
+        <createTable tableName="usagestatistics_orderusage">
+            <column name="orderusage_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="order_id" type="int">
+                <constraints nullable="false" foreignKeyName="orderusagefk_order_id" references="orders(order_id)" />
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="orderusagefk_user_id" references="users(user_id)"/>
+            </column>
+            <column name="patient_id" type="int" > 
+                <constraints nullable="false" foreignKeyName="orderusagefk_patient_id" references="patient(patient_id)"/>
+            </column>
+            <column name="location_id" type="int" >
+                <constraints nullable="false" foreignKeyName="orderusagefk_location_id" references="location(location_id)" />
+            </column>
+            <column name="action_type_id" type="int" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="encounter_id" type="int" >          
+            </column>
+            <column name="timestamp" type="timestamp">
+                
+            </column>
+        </createTable>    
+    </changeSet>
+    
+    <changeSet id="usagemodule-8" author="pprevide">
+        <sql>
+            drop table if exists usagestatistics_visitusage;
+        </sql>
+    </changeSet>
+    
+    <changeSet id="usagemodule-9" author="pprevide">
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="usagestatistics_visitusage" />
+            </not>
+        </preConditions>
+        <createTable tableName="usagestatistics_visitusage">
+            <column name="visitusage_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="visit_id" type="int">
+                <constraints nullable="false" foreignKeyName="visitusagefk_visit_id" references="visit(visit_id)" />
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="visitusagefk_user_id" references="users(user_id)"/>
+            </column>
+            <column name="patient_id" type="int" > 
+                <constraints nullable="false" foreignKeyName="visitusagefk_patient_id" references="patient(patient_id)"/>
+            </column>
+            <column name="location_id" type="int" >
+                <constraints nullable="false" foreignKeyName="visitusagefk_location_id" references="location(location_id)" />
+            </column>
+            <column name="action_type_id" type="int" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="encounter_id" type="int" >          
+            </column>
+            <column name="timestamp" type="timestamp">
+                
+            </column>
+        </createTable>    
+    </changeSet>
+    
+   
+    
+    
+</databaseChangeLog>
