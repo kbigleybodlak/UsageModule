@@ -48,7 +48,7 @@ public class PatientServiceAdvice implements AfterReturningAdvice {
             //patientUsage.setId(5);
             patientUsage.setPatient_id(new Integer(p));
             patientUsage.setUser_id(new Integer(u));
-            patientUsage.setLocation_id(new Integer(locationId));
+            //patientUsage.setLocation_id(new Integer(locationId));
             patientUsage.setAction_type_id(new Integer(1));
             
             UsageModuleService ums = (UsageModuleService)Context.getService(UsageModuleService.class);

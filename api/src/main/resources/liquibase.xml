@@ -70,9 +70,11 @@
             <column name="patient_id" type="int" > 
                 <constraints nullable="false" foreignKeyName="patientusagefk_patient_id" references="patient(patient_id)"/>
             </column>
+            <!--
             <column name="location_id" type="int" >
                 <constraints nullable="false" foreignKeyName="patientusagefk_location_id" references="location(location_id)" />
             </column>
+            -->
             <column name="action_type_id" type="int" >
                 <constraints nullable="false"/>
             </column>
@@ -110,9 +112,11 @@
             <column name="patient_id" type="int" > 
                 <constraints nullable="false" foreignKeyName="orderusagefk_patient_id" references="patient(patient_id)"/>
             </column>
+            <!--
             <column name="location_id" type="int" >
                 <constraints nullable="false" foreignKeyName="orderusagefk_location_id" references="location(location_id)" />
             </column>
+            -->
             <column name="action_type_id" type="int" >
                 <constraints nullable="false"/>
             </column>
@@ -149,9 +153,11 @@
             <column name="patient_id" type="int" > 
                 <constraints nullable="false" foreignKeyName="visitusagefk_patient_id" references="patient(patient_id)"/>
             </column>
+            <!--
             <column name="location_id" type="int" >
                 <constraints nullable="false" foreignKeyName="visitusagefk_location_id" references="location(location_id)" />
             </column>
+            -->
             <column name="action_type_id" type="int" >
                 <constraints nullable="false"/>
             </column>
