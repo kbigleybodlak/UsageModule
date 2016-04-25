@@ -42,7 +42,7 @@
         </advice>
         <advice>
             <point>org.openmrs.api.VisitService</point>
-            <class>org.openmrs.module.UsageModule.advice.VisitServiceAdvice</class>
+            <class>org.openmrs.module.UsageModule.advice.VisitServiceAdvisor</class>
         </advice>
         
 	

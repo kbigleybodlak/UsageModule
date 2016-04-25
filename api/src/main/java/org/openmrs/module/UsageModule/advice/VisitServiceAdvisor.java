@@ -4,10 +4,8 @@ import java.lang.reflect.Method;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Patient; 
-import org.openmrs.PatientIdentifier;
-import org.openmrs.Order;
+import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
-import org.springframework.aop.MethodBeforeAdvice;
 import org.openmrs.module.UsageModule.*;
 import org.openmrs.module.UsageModule.api.*;
 import org.openmrs.User;
@@ -19,7 +17,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 
-public class OrderServiceAdvisor extends StaticMethodMatcherPointcutAdvisor 
+public class VisitServiceAdvisor extends StaticMethodMatcherPointcutAdvisor 
         implements Advisor {
     
     private static final long serialVersionUID = 3333L;
@@ -28,16 +26,16 @@ public class OrderServiceAdvisor extends StaticMethodMatcherPointcutAdvisor
     
     @Override
     public boolean matches(Method method, Class targetClass) {
-        return (method.getName().equals("saveOrder")) || 
-                (method.getName().equals("voidOrder"));
+        return (method.getName().equals("saveVisit")) || 
+                (method.getName().equals("voidVisit"));
     }
     
     @Override
     public Advice getAdvice() {
-        return new OrderServAdvice();
+        return new VisitServAdvice();
     }
     
-    private class OrderServAdvice implements MethodInterceptor {
+    private class VisitServAdvice implements MethodInterceptor {
         
         @Override
         public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -47,81 +45,76 @@ public class OrderServiceAdvisor extends StaticMethodMatcherPointcutAdvisor
             
             Object[] argsArray = invocation.getArguments();
             
-            Order order = (Order)argsArray[0];
-            Patient patient = order.getPatient();
+            Visit visit = (Visit)argsArray[0];
+            Patient patient = visit.getPatient();
             int patientNumber = -1; // temporary value
+            
             try {
                 patientNumber = patient.getPatientId();
             } catch (NullPointerException npe) {
-                log.warn("!!! orderUsage problem: Patient Id was null");
-                log.warn("!!! orderUsage proceeds with default patientid value -1");
+                log.warn("!!! visitUsage problem: Patient Id was null");
+                log.warn("!!! visitUsage proceeds with default patientid value -1");
             }
             
             Object returnedObject = null;
             
             int actionTypeNumber = 3; // "voided" is the default action type
             
-            // create and start preparing OrderUsage instance
-            OrderUsage orderUsage = new OrderUsage();
+            // create and start preparing VisitUsage instance
+            VisitUsage visitUsage = new VisitUsage();
             User user = Context.getAuthenticatedUser();
             int userIdNumber = user.getUserId();
-            orderUsage.setUser_id(new Integer(userIdNumber));
-            orderUsage.setPatient_id(new Integer(patientNumber));
-            int orderNumber = -1;
+            visitUsage.setUser_id(new Integer(userIdNumber));
+            visitUsage.setPatient_id(new Integer(patientNumber));
+            int visitNumber = -1;
             
             log.warn("+++Before " + methodName + "...");
             
-            if (methodName.equals("saveOrder")) {
-                // before saveOrder method:
+            if (methodName.equals("saveVisit")) {
+                // before saveVisit method:
                 try {                  
-                    orderNumber = order.getOrderId();
-                    actionTypeNumber = 2; // orderId exists, so it's an update
+                    visitNumber = visit.getVisitId();
+                    actionTypeNumber = 2; // visitId exists, so it's an update
                 } catch (NullPointerException np) {
-                    log.warn("getOrderId failed - creating a new order...");
-                    actionTypeNumber = 1; // no orderId, so it's a new order that we are creating
+                    log.warn("getVisitId failed - creating a new visit...");
+                    actionTypeNumber = 1; // no visitId, so it's a new visit that we are creating
                 }
                 
-                // saveOrder Method proceeds:
+                // saveVisit Method proceeds:
                 returnedObject = invocation.proceed();
                 
-                // after saveOrder method:
+                // after saveVisit method:
                 log.warn("+++After " + methodName + "...");
-                if (orderNumber<0) { // creating a new order record
-                    Order returnedOrder = (Order)returnedObject;   
-                    orderNumber = returnedOrder.getOrderId();
+                if (visitNumber<0) { // creating a new visit record
+                    Visit returnedVisit = (Visit)returnedObject;   
+                    visitNumber = returnedVisit.getVisitId();
                 }
-                
-                
-            } // end if saveOrder()
-            else if (methodName.equals("voidOrder")) {
+            } // end if saveVisit()
+            else if (methodName.equals("voidVisit")) {
                                 
-                // voidOrder method proceeds:
+                // voidVisit method proceeds:
                 returnedObject = invocation.proceed();
                 
-                // after voidOrder method:
-                Order voidedOrder = (Order)returnedObject;
-                orderNumber = voidedOrder.getOrderId();
-            } // end if voidOrder
+                // after voidVisit method:
+                Visit voidedVisit = (Visit)returnedObject;
+                visitNumber = voidedVisit.getVisitId();
+            } // end if voidVisit
             
-            // complete OrderUsage instance
-            orderUsage.setOrder_id(new Integer(orderNumber));
-            orderUsage.setAction_type_id(new Integer(actionTypeNumber));
+            // complete VisitUsage instance
+            visitUsage.setVisit_id(new Integer(visitNumber));
+            visitUsage.setAction_type_id(new Integer(actionTypeNumber));
                 
-            // store PatientUsage record in database
+            // store VisitUsage record in database
             UsageModuleService ums = (UsageModuleService)Context.getService(UsageModuleService.class);
-            ums.saveOrderUsage(orderUsage);
+            ums.saveVisitUsage(visitUsage);
             
-            
-            
+                       
             return returnedObject;
             
         } // end invoke method
         
         
-        
-    } // end private class OrderServAdvice
+    } // end private class VisitServAdvice
     
-    
-    
-    
+ 
 } // end class

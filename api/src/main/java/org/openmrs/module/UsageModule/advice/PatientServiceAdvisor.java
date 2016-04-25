@@ -27,7 +27,6 @@ public class PatientServiceAdvisor extends StaticMethodMatcherPointcutAdvisor
     
     @Override
     public boolean matches(Method method, Class targetClass) {
-        // only 'run' this advice on the getter methods        
         return (method.getName().equals("savePatient")) || 
                 (method.getName().equals("voidPatient"));
     }
