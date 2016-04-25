@@ -34,11 +34,11 @@
         
         <advice>
             <point>org.openmrs.api.PatientService</point>
-            <class>org.openmrs.module.UsageModule.advice.PatientServiceAdvice</class>
+            <class>org.openmrs.module.UsageModule.advice.PatientServiceAdvisor</class>
         </advice>
         <advice>
             <point>org.openmrs.api.OrderService</point>
-            <class>org.openmrs.module.UsageModule.advice.OrderServiceAdvice</class>
+            <class>org.openmrs.module.UsageModule.advice.OrderServiceAdvisor</class>
         </advice>
         <advice>
             <point>org.openmrs.api.VisitService</point>
