@@ -11,7 +11,7 @@
         </id>
         <property name="user_id" column="user_id" not-null="true" ></property>
         <property name="patient_id" column="patient_id" not-null="true"></property>
-        <property name="location_id" column="location_id" not-null="true"></property>
+        <!--<property name="location_id" column="location_id" not-null="true"></property>-->
         <property name="action_type_id" column="action_type_id" not-null="true"></property>
         <property name="encounter_id" column="encounter_id" ></property>
         <property name="timestamp" column="timestamp"></property>          
@@ -24,7 +24,7 @@
         <property name="order_id" column="order_id" not-null="true" ></property>
         <property name="user_id" column="user_id" not-null="true" ></property>
         <property name="patient_id" column="patient_id" not-null="true"></property>
-        <property name="location_id" column="location_id" not-null="true"></property>
+        <!--<property name="location_id" column="location_id" not-null="true"></property>-->
         <property name="action_type_id" column="action_type_id" not-null="true"></property>
         <property name="encounter_id" column="encounter_id" ></property>
         <property name="timestamp" column="timestamp"></property>         
@@ -37,7 +37,7 @@
         <property name="visit_id" column="visit_id" not-null="true" ></property>
         <property name="user_id" column="user_id" not-null="true" ></property>
         <property name="patient_id" column="patient_id" not-null="true"></property>
-        <property name="location_id" column="location_id" not-null="true"></property>
+        <!--<property name="location_id" column="location_id" not-null="true"></property>-->
         <property name="action_type_id" column="action_type_id" not-null="true"></property>
         <property name="encounter_id" column="encounter_id" ></property>
         <property name="timestamp" column="timestamp"></property>         

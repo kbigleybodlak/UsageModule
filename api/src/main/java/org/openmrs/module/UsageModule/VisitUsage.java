@@ -15,7 +15,7 @@ public class VisitUsage extends BaseOpenmrsObject implements Serializable {
     private Integer visit_id;
     private Integer user_id;
     private Integer patient_id;
-    private Integer location_id;
+    //private Integer location_id;
     private Integer action_type_id;
     private Integer encounter_id;
     private Timestamp timestamp;
@@ -60,7 +60,7 @@ public class VisitUsage extends BaseOpenmrsObject implements Serializable {
     public void setPatient_id(Integer patient_id) {
         this.patient_id = patient_id;
     }
-
+/*
     public Integer getLocation_id() {
         return location_id;
     }
@@ -68,7 +68,7 @@ public class VisitUsage extends BaseOpenmrsObject implements Serializable {
     public void setLocation_id(Integer location_id) {
         this.location_id = location_id;
     }
-
+*/
     public Integer getAction_type_id() {
         return action_type_id;
     }
