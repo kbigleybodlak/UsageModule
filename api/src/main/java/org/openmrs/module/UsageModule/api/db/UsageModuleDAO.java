@@ -29,7 +29,7 @@ public interface UsageModuleDAO {
     
     PatientUsage getPatientUsage (Integer id);
     
-    public List<PatientUsage> getPatientUsages (User user, Patient patient, 
+    List<PatientUsage> getPatientUsages (User user, Patient patient, 
             Date from, Date until, ActionType filter, PagingInfo paging);
 
     

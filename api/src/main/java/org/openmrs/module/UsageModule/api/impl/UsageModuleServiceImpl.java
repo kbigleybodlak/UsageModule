@@ -65,7 +65,7 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
         return dao.getPatientUsage(id);
     }
     
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PatientUsage> getPatientUsages (User user, Patient patient, 
             Date from, Date until, ActionType filter, PagingInfo paging){
         return dao.getPatientUsages(user,patient,from,until,filter,paging);
