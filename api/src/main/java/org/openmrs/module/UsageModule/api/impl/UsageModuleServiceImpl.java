@@ -10,6 +10,8 @@
 package org.openmrs.module.UsageModule.api.impl;
 
 
+import java.util.Date;
+import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
@@ -18,11 +20,13 @@ import org.openmrs.module.UsageModule.api.UsageModuleService;
 import org.openmrs.module.UsageModule.api.db.UsageModuleDAO;
 import org.openmrs.Patient;
 import org.openmrs.Order;
+import org.openmrs.User;
 import org.openmrs.Visit;
 import org.openmrs.module.UsageModule.PatientUsage;
 import org.openmrs.module.UsageModule.OrderUsage;
 import org.openmrs.module.UsageModule.VisitUsage;
 import org.openmrs.module.UsageModule.ActionType;
+import org.openmrs.module.UsageModule.util.PagingInfo;
 
 /**
  * It is a default implementation of {@link UsageModuleService}.
@@ -60,6 +64,13 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
     public PatientUsage getPatientUsage (Integer id) {
         return dao.getPatientUsage(id);
     }
+    
+    @Transactional
+    public List<PatientUsage> getPatientUsages (User user, Patient patient, 
+            Date from, Date until, ActionType filter, PagingInfo paging){
+        return dao.getPatientUsages(user,patient,from,until,filter,paging);
+    }
+
     
     @Transactional
     public OrderUsage saveOrderUsage(OrderUsage orderUsage) {

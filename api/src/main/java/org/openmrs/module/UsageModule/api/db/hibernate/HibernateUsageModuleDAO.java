@@ -9,18 +9,26 @@
  */
 package org.openmrs.module.UsageModule.api.db.hibernate;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Patient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
+import org.openmrs.User;
 import org.openmrs.module.UsageModule.api.db.UsageModuleDAO;
 import org.openmrs.module.UsageModule.PatientUsage;
 import org.openmrs.module.UsageModule.OrderUsage;
 import org.openmrs.module.UsageModule.VisitUsage;
 import org.openmrs.module.UsageModule.ActionType;
+import org.openmrs.module.UsageModule.Constants;
+import org.openmrs.module.UsageModule.util.PagingInfo;
 
 /**
  * It is a default implementation of  {@link UsageModuleDAO}.
@@ -30,6 +38,12 @@ public class HibernateUsageModuleDAO implements UsageModuleDAO {
 	
 	private SessionFactory sessionFactory;
 	
+        protected static final String TABLE_USAGE = Constants.MODULE_ID + "_usage";
+        protected static final String TABLE_PATIENTUSAGE = Constants.MODULE_ID + "_patientusage";
+	protected static final String TABLE_DAILY = Constants.MODULE_ID + "_daily";
+	protected static final String TABLE_ENCOUNTER = Constants.MODULE_ID + "_encounter";
+        protected static final SimpleDateFormat dfSQL = new SimpleDateFormat("yyyy-MM-dd");
+
 	/**
      * @param sessionFactory the sessionFactory to set
      */
@@ -54,6 +68,46 @@ public class HibernateUsageModuleDAO implements UsageModuleDAO {
                 PatientUsage.class);
         crit.add(Restrictions.eq("patientusage_id", id));
         return (PatientUsage) crit.uniqueResult();
+    }
+    
+    public List<PatientUsage> getPatientUsages (User user, Patient patient, Date from, Date until, ActionType filter, PagingInfo paging){
+        StringBuffer sb = new StringBuffer();
+		sb.append("SELECT SQL_CALC_FOUND_ROWS {s.*} ");
+		sb.append("FROM " + TABLE_PATIENTUSAGE + " s ");
+		sb.append("WHERE 1=1 ");
+		
+		if (user != null)
+			sb.append("  AND s.user_id = " + user.getUserId() + " ");
+		if (patient != null)
+			sb.append("  AND s.patient_id = " + patient.getPatientId() + " ");
+		if (from != null)
+			sb.append("  AND s.timestamp > '" + dfSQL.format(from) + "' ");
+		if (until != null)
+			sb.append("  AND s.timestamp < '" + dfSQL.format(until) + "' ");
+		
+		if (filter.getAction_type_id() == 1)  //creating
+			sb.append("  AND s.actiontype_id = 1 ");
+		/*else if (filter == ActionCriteria.ENCOUNTER)
+			sb.append("  AND s.usage_id IN (SELECT usage_id FROM " + TABLE_ENCOUNTER + ") ");
+                        */
+		else if (filter.getAction_type_id() == 2) //updating
+			sb.append("  AND s.actiontype_id = 2 ");
+		else if (filter.getAction_type_id() == 3) //voiding
+			sb.append("  AND s.actiontype_id = 3 ");
+		
+		sb.append("ORDER BY s.timestamp DESC ");
+		
+		sb.append("LIMIT " + paging.getPageOffset() + ", " + paging.getPageSize() + ";");
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		List<PatientUsage> results = sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
+			.addEntity("s", PatientUsage.class)
+			.list();
+		
+		int count = ((Number)session.createSQLQuery("SELECT FOUND_ROWS();").uniqueResult()).intValue();
+		paging.setResultsTotal(count);
+		return results;
     }
     
     public OrderUsage saveOrderUsage(OrderUsage orderUsage) {
