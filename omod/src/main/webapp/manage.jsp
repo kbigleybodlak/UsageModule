@@ -16,14 +16,15 @@
     or give the div a size as shown here.
 -->
 
-<div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="myDiv" style="width: 480px; height: 800px;"><!-- Plotly chart will be drawn inside this DIV --></div>
 <p><a href="a.jsp">HTML Images</a> is a link to a page on this website.</p>
 <script>
 var data = [{
   type: 'bar',
-  x: [20, 14, 23,100,200,300,400,34,65,123,678,85],
-  y: ['giraffes', 'orangutans', 'monkeys', 'fawf','fsad','rewd','bes','g4s','b64e','h5es','fse4','he64ss'],
-  orientation: 'h'
+  x: [50,23,4,91,43,87,23,1,0,34,3,4,5,6,7,8,9,0,1,11],
+  y: ['id 1','id 2','id 3','id 4','id 5','id 6','id 7','id 8','id 9','id 10','id 11','id 12','id 13','id 14','id 15','id 16','id 17','id 18','id 19','id 20'],
+  orientation: 'h',
+
 }];
 
 Plotly.newPlot('myDiv', data);
