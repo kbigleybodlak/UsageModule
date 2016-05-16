@@ -17,6 +17,19 @@ public class PatientUsage extends BaseOpenmrsObject implements Serializable  {
     private Integer action_type_id;
     private Integer encounter_id;
     private Timestamp timestamp;
+    
+    public String getInfo() {
+        String patient_usage_info = 
+                //"patientusage_id: " + this.patientusage_id +
+                " user_id: " + this.user_id +
+                " patient_id: " + this.patient_id +
+                " action_type_id: " + this.action_type_id +
+                " encounter_id: " + this.encounter_id+
+                " timestamp: " + this.timestamp;
+        return patient_usage_info;
+               
+        
+    }
 
     public Integer getPatientusage_id() {
         return patientusage_id;
