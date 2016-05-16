@@ -195,7 +195,7 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //get the total number of patientUsages in database
         int total = this.getPatientUsageCount();
-        List<PatientUsage> results = dao.getPatientUsages(start, until);
+        List<Object> results = dao.getPatientUsages_Json(start, until);
         
         //apply logic here to determine the scope of results to be returned
         if(usages < total){

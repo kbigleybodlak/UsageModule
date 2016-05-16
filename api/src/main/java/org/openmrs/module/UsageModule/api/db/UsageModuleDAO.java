@@ -40,8 +40,14 @@ public interface UsageModuleDAO {
     ActionType getActionType (Integer id);
 
     List<PatientUsage> getPatientUsages(Date start, Date until);
+    List<Object> getPatientUsages_Json(Date start, Date until);
+
     List<VisitUsage> getVisitUsages(Date start, Date until);
+    List<Object> getVisitUsages_Json(Date start, Date until);
+
     List<OrderUsage> getOrderUsages(Date start, Date until);
+    List<Object> getOrderUsages_Json(Date start, Date until);
+
     int getPatientUsageCount();
     int getVisitUsageCount();   
     int getOrderUsageCount();
