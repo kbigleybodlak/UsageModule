@@ -50,8 +50,13 @@ public interface UsageModuleService extends OpenmrsService {
     
     //More services about patient usage
     public List<PatientUsage> getPatientUsages(Date start, Date until, int usages);
+    public String getPatientUsages_Json(Date start, Date until, int usages);
+    
     public List<OrderUsage> getOrderUsages(Date start, Date until, int usages);
+    public String getOrderUsages_Json(Date start, Date until, int usages);
+    
     public List<VisitUsage> getVisitUsages(Date start, Date until, int usages);
+    public String getVisitUsages_Json(Date start, Date until, int usages);
     public int getPatientUsageCount();
     public int getVisitUsageCount(); 
     public int getOrderUsageCount();

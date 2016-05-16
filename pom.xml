@@ -130,6 +130,17 @@
 				<version>3.2.10</version>
 				<type>gem</type>
 			</dependency>
+                        <dependency>  
+                            <groupId>org.codehaus.jackson</groupId>
+                            <artifactId>jackson-mapper-asl</artifactId>
+                            <version>1.8.2</version>
+                        </dependency>
+
+                        <dependency>  
+                            <groupId>org.codehaus.jackson</groupId>
+                            <artifactId>jackson-core-asl</artifactId>
+                            <version>1.8.2</version>
+                        </dependency>   
 		</dependencies>
 	</dependencyManagement>
 

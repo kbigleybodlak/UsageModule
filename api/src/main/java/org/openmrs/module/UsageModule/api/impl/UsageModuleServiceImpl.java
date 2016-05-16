@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.module.UsageModule.api.UsageModuleService;
 import org.openmrs.module.UsageModule.api.db.UsageModuleDAO;
 import org.openmrs.Patient;
@@ -135,6 +136,7 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
         //apply logic here to determine the scope of results to be returned
         if(usages < total){
             //need to be implemented
+ 
         }else{
             //need to be implemented
         }
@@ -159,7 +161,87 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
         return dao.getOrderUsageCount();
     }
     
-    
+    // use for converting a single java object to json
+    private String toJson(Object obj) {
+        if (obj==null) return "{}";
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = "{}";
+        try {
+            jsonString = mapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonString;    
+    }
+
+
+
+    // use for converting a List of objects into json array
+    private String toJson(List<Object> incomingList) {
+        if (incomingList.isEmpty()) return "[]";
+        String jsonString = "[]";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            jsonString= mapper.writeValueAsString(incomingList);
+        } catch (Exception e) {
+            System.out.println("ERROR: "+e.getMessage());
+        }
+        
+        return jsonString;
+    }
+
+    @Override
+    public String getPatientUsages_Json(Date start, Date until, int usages) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //get the total number of patientUsages in database
+        int total = this.getPatientUsageCount();
+        List<PatientUsage> results = dao.getPatientUsages(start, until);
+        
+        //apply logic here to determine the scope of results to be returned
+        if(usages < total){
+            //need to be implemented
+        }else{
+            //need to be implemented
+        }
+           
+                
+        return this.toJson(results);
+    }
+
+    @Override
+    public String getOrderUsages_Json(Date start, Date until, int usages) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int total = this.getOrderUsageCount();
+        List<OrderUsage> results = dao.getOrderUsages(start, until);
+        
+        //apply logic here to determine the scope of results to be returned
+        if(usages < total){
+            //need to be implemented
+        }else{
+            //need to be implemented
+        }
+                
+        return this.toJson(results);
+    }
+
+    @Override
+    public String getVisitUsages_Json(Date start, Date until, int usages) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               int total = this.getVisitUsageCount();
+        List<VisitUsage> results = dao.getVisitUsages(start, until);
+        
+        //apply logic here to determine the scope of results to be returned
+        if(usages < total){
+            //need to be implemented
+ 
+        }else{
+            //need to be implemented
+        }
+                
+        return this.toJson(results);
+    }
+
+
     
     
 }

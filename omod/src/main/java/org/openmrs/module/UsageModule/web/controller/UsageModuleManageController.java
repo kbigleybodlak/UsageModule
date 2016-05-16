@@ -64,8 +64,8 @@ public class  UsageModuleManageController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start = sdf.parse("2016-5-14");
         Date until = sdf.parse("2016-5-15");
-        List<PatientUsage> patientUsages_1 = Context.getService(UsageModuleService.class).getPatientUsages(start, until, 2);
-        
+        //List<PatientUsage> patientUsages_1 = Context.getService(UsageModuleService.class).getPatientUsages(start, until, 2);
+        String patientUsages_1 = Context.getService(UsageModuleService.class).getPatientUsages_Json(start, until, 2);
         //get a list of PatientUsage objects from database, according to year, month, day, hour and minute
         SimpleDateFormat sdf_2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         
@@ -74,11 +74,13 @@ public class  UsageModuleManageController {
         System.out.println("start time: " + sdf_2.format(start));
         System.out.println("until time: " + sdf_2.format(until));
         
-        List<PatientUsage> patientUsages_2 = Context.getService(UsageModuleService.class).getPatientUsages(start, until, 2);
-        System.out.println("Patient usages between 2016-5-12 00:36 and 2016-5-15 14:29 are: ");
-        for(PatientUsage pu: patientUsages_2){
-            System.out.println(pu.getInfo());
-        }
+        //List<PatientUsage> patientUsages_2 = Context.getService(UsageModuleService.class).getPatientUsages(start, until, 2);
+        String patientUsages_2 = Context.getService(UsageModuleService.class).getPatientUsages_Json(start, until, 2);
+
+        //System.out.println("Patient usages between 2016-5-12 00:36 and 2016-5-15 14:29 are: ");
+        //for(PatientUsage pu: patientUsages_2){
+          //  System.out.println(pu.getInfo());
+        //}
         
         //Context.getService(UsageModuleService.class).getPatientUsageCount();
         System.out.println("Get total number of Patient usages: " +
