@@ -124,14 +124,42 @@ public class HibernateUsageModuleDAO implements UsageModuleDAO {
 
     @Override
     public List<VisitUsage> getVisitUsages(Date start, Date until) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return null;
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //get the current Session object
+        Session session = sessionFactory.getCurrentSession();
+        //creat a hibernate query
+        StringBuffer sb = new StringBuffer();
+        //sb.append("SELECT P.user_id, P.timestamp"
+        sb.append(" FROM org.openmrs.module.UsageModule.VisitUsage AS V");
+        sb.append(" Where V.timestamp > '" + dfSQL.format(start) +"' ");
+        sb.append(" AND V.timestamp < '" + dfSQL.format(until) + "'");
+        sb.append(" ORDER BY P.timestamp DESC ");
+        //sb.append(" GROUP BY P.user_id ");
+        String hql = sb.toString();
+        Query query = session.createQuery(hql);
+        List<VisitUsage> results = query.list();
+       
+        return results;
     }
 
     @Override
     public List<OrderUsage> getOrderUsages(Date start, Date until) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return null;
+                //get the current Session object
+        Session session = sessionFactory.getCurrentSession();
+        //creat a hibernate query
+        StringBuffer sb = new StringBuffer();
+        //sb.append("SELECT P.user_id, P.timestamp"
+        sb.append(" FROM org.openmrs.module.UsageModule.OrderUsage AS O");
+        sb.append(" Where O.timestamp > '" + dfSQL.format(start) +"' ");
+        sb.append(" AND O.timestamp < '" + dfSQL.format(until) + "'");
+        sb.append(" ORDER BY O.timestamp DESC ");
+        //sb.append(" GROUP BY P.user_id ");
+        String hql = sb.toString();
+        Query query = session.createQuery(hql);
+        List<OrderUsage> results = query.list();
+       
+        return results;
     }
     
 
