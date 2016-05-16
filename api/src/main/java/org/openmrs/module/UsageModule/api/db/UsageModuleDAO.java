@@ -13,12 +13,10 @@ import java.util.Date;
 import java.util.List;
 import org.openmrs.module.UsageModule.api.UsageModuleService;
 import org.openmrs.Patient;
-import org.openmrs.User;
 import org.openmrs.module.UsageModule.ActionType;
 import org.openmrs.module.UsageModule.PatientUsage;
 import org.openmrs.module.UsageModule.OrderUsage;
 import org.openmrs.module.UsageModule.VisitUsage;
-import org.openmrs.module.UsageModule.util.PagingInfo;
 
 /**
  *  Database methods for {@link UsageModuleService}.
@@ -28,10 +26,6 @@ public interface UsageModuleDAO {
     PatientUsage savePatientUsage(PatientUsage patientUsage);
     
     PatientUsage getPatientUsage (Integer id);
-    
-    List<PatientUsage> getPatientUsages (User user, Patient patient, 
-            Date from, Date until, ActionType filter, PagingInfo paging);
-
     
     OrderUsage saveOrderUsage(OrderUsage orderUsage);
     
@@ -45,6 +39,10 @@ public interface UsageModuleDAO {
     
     ActionType getActionType (Integer id);
 
-    
-    
+    List<PatientUsage> getPatientUsages(Date start, Date until);
+    List<VisitUsage> getVisitUsages(Date start, Date until);
+    List<OrderUsage> getOrderUsages(Date start, Date until);
+    int getPatientUsageCount();
+    int getVisitUsageCount();   
+    int getOrderUsageCount();
 } // end interface

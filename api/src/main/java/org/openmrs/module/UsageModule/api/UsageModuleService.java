@@ -12,13 +12,11 @@ package org.openmrs.module.UsageModule.api;
 import java.util.Date;
 import java.util.List;
 import org.openmrs.Patient;
-import org.openmrs.User;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.UsageModule.PatientUsage;
 import org.openmrs.module.UsageModule.OrderUsage;
 import org.openmrs.module.UsageModule.VisitUsage;
 import org.openmrs.module.UsageModule.ActionType;
-import org.openmrs.module.UsageModule.util.PagingInfo;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,9 +36,6 @@ public interface UsageModuleService extends OpenmrsService {
     
     public PatientUsage getPatientUsage (Integer id);
     
-    List<PatientUsage> getPatientUsages (User user, Patient patient, 
-            Date from, Date until, ActionType filter, PagingInfo paging);
-    
     public OrderUsage saveOrderUsage(OrderUsage orderUsage);
     
     public OrderUsage getOrderUsage (Integer id);
@@ -53,7 +48,11 @@ public interface UsageModuleService extends OpenmrsService {
     
     public ActionType getActionType (Integer id);
     
-    
-    
-	
+    //More services about patient usage
+    public List<PatientUsage> getPatientUsages(Date start, Date until, int usages);
+    public List<OrderUsage> getOrderUsages(Date start, Date until, int usages);
+    public List<VisitUsage> getVisitUsages(Date start, Date until, int usages);
+    public int getPatientUsageCount();
+    public int getVisitUsageCount(); 
+    public int getOrderUsageCount();
 } // end interface

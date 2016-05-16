@@ -20,13 +20,11 @@ import org.openmrs.module.UsageModule.api.UsageModuleService;
 import org.openmrs.module.UsageModule.api.db.UsageModuleDAO;
 import org.openmrs.Patient;
 import org.openmrs.Order;
-import org.openmrs.User;
 import org.openmrs.Visit;
 import org.openmrs.module.UsageModule.PatientUsage;
 import org.openmrs.module.UsageModule.OrderUsage;
 import org.openmrs.module.UsageModule.VisitUsage;
 import org.openmrs.module.UsageModule.ActionType;
-import org.openmrs.module.UsageModule.util.PagingInfo;
 
 /**
  * It is a default implementation of {@link UsageModuleService}.
@@ -65,13 +63,6 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
         return dao.getPatientUsage(id);
     }
     
-    @Transactional(readOnly = true)
-    public List<PatientUsage> getPatientUsages (User user, Patient patient, 
-            Date from, Date until, ActionType filter, PagingInfo paging){
-        return dao.getPatientUsages(user,patient,from,until,filter,paging);
-    }
-
-    
     @Transactional
     public OrderUsage saveOrderUsage(OrderUsage orderUsage) {
         return dao.saveOrderUsage(orderUsage);
@@ -101,6 +92,74 @@ public class UsageModuleServiceImpl extends BaseOpenmrsService implements UsageM
     public ActionType getActionType (Integer id) {
         return dao.getActionType(id);
     }
+
+    @Override
+    public List<PatientUsage> getPatientUsages(Date start, Date until, int usages) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //get the total number of patientUsages in database
+        int total = this.getPatientUsageCount();
+        List<PatientUsage> results = dao.getPatientUsages(start, until);
+        
+        //apply logic here to determine the scope of results to be returned
+        if(usages < total){
+            //need to be implemented
+        }else{
+            //need to be implemented
+        }
+                
+        return results;
+    }
+
+    @Override
+    public List<OrderUsage> getOrderUsages(Date start, Date until, int usages) {
+       //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int total = this.getOrderUsageCount();
+        List<OrderUsage> results = dao.getOrderUsages(start, until);
+        
+        //apply logic here to determine the scope of results to be returned
+        if(usages < total){
+            //need to be implemented
+        }else{
+            //need to be implemented
+        }
+                
+        return results;
+    }
+
+    @Override
+    public List<VisitUsage> getVisitUsages(Date start, Date until, int usages) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int total = this.getVisitUsageCount();
+        List<VisitUsage> results = dao.getVisitUsages(start, until);
+        
+        //apply logic here to determine the scope of results to be returned
+        if(usages < total){
+            //need to be implemented
+        }else{
+            //need to be implemented
+        }
+                
+        return results;
+    }
+
+    @Override
+    public int getPatientUsageCount() {
+        return dao.getPatientUsageCount();
+    }
+
+    @Override
+    public int getVisitUsageCount() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dao.getVisitUsageCount();
+    }
+
+    @Override
+    public int getOrderUsageCount() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dao.getOrderUsageCount();
+    }
+    
+    
     
     
 }
