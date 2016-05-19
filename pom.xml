@@ -47,7 +47,13 @@
 				<version>${uiframeworkVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-
+<dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>uiframework-api</artifactId>
+            <version>3.6</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>appframework-api</artifactId>

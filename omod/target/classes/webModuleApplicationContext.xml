@@ -29,7 +29,9 @@
 	<bean class="org.openmrs.ui.framework.StandardModuleUiConfiguration">
 		<property name="moduleId" value="UsageModule"/>
 	</bean>
-	
+	<bean class="org.openmrs.ui.framework.StandardModuleUiConfiguration">
+        <property name="moduleId" value="yourmoduleid"/>
+    </bean>
 	<context:component-scan base-package="org.openmrs.module.UsageModule.web.controller" />
  
 		
